@@ -40,12 +40,10 @@ inquirer.prompt(primaryQuestions)
 
 
 .then(response => {
+    var newEmail = response.email;
+    var newName = response.name;
+    var newId = response.id;
     if (response.employee === "Team Manager") {
-        var newEmail = response.email;
-        var newName = response.name;
-        var newId = response.id;
-
-
         inquirer.prompt({
             type: "input",
             message: "what is their office number?",
@@ -53,27 +51,47 @@ inquirer.prompt(primaryQuestions)
         })
 
         .then(response => {
-            var office = response.office;
-            console.log(newName);
+            var newOffice = response.office;
 
             function createNewTeamManager(name, id, email, officeNumber) {
                 const newTeamManager = new TeamManager(name, id, email, officeNumber);
+                return newTeamManager;
             }
-            let newTeamManager = createNewTeamManager(newName, newId, newEmail, office);
+            var newTeamManager = createNewTeamManager(newName, newId, newEmail, newOffice);
             console.log(newTeamManager);
         })
     } else if (response.employee === "Engineer") {
         inquirer.prompt({
-            type: "input",
-            message: "what is their gitHub link?",
-            name: "gitHub"
-        })
+                type: "input",
+                message: "what is their gitHub link?",
+                name: "gitHub"
+            })
+            .then(response => {
+                var newGitHub = response.gitHub;
+
+                function createNewEngineer(name, id, email, gitHub) {
+                    const newEngineer = new Engineer(name, id, email, gitHub);
+                    return newEngineer;
+                }
+                let newEngineeer = createNewEngineer(newName, newId, newEmail, newGitHub);
+                console.log(newEngineeer);
+            })
     } else if (response.employee === "Intern") {
         inquirer.prompt({
-            type: "input",
-            message: "Where do they go to school?",
-            name: "school"
-        })
+                type: "input",
+                message: "Where do they go to school?",
+                name: "school"
+            })
+            .then(response => {
+                var newSchool = response.school;
+
+                function createNewIntern(name, id, email, school) {
+                    const newIntern = new Intern(name, id, email, school);
+                    return newIntern;
+                }
+                let newIntern = createNewIntern(newName, newId, newEmail, newSchool);
+                console.log(newIntern);
+            })
     }
 
     // function createNewTeamMember(name, id, email) {
@@ -89,39 +107,14 @@ inquirer.prompt(primaryQuestions)
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-//add these in to correct if statements
 
 
 
-
-
-// .then(response => {
-//     //make office number input
-//     function createNewTeamManager(name, id, email, officeNumber) {
-//         const newTeamManager = new TeamMember(name, id, email);
-//         //(response.name, response.id, response.email, email.officeNumber)
-//     };
-
-//     //make github input
-//     function createNewEngineer(name, id, email, gitHub) {
-//         const newEngineer = new Engineer();
-//         //(response.name, response.id, response.email, response.gitHub)
-//     };
-
-//     //make school input
-//     function createNewIntern(name, id, email, school) {
-//         const newIntern = new Intern(name, id, email, school);
-//         //(response.name, response.id, response.email, response.school)
-//         return newIntern;
 //     };
 //     let newTeamManager = createNewTeamManager(response.name, response.id, response.email, response.officeNumber)
 //     let newEngineer = createNewEngineer(response.name, response.id, response.email, response.gitHub)
 //     let newIntern = createNewIntern(response.name, response.id, response.email, response.school)
 
-//     console.log(newIntern);
-//     console.log(newEngineer);
-//     console.log(newTeamManager);
-//     console.log(response.name)
 
 // });
 
