@@ -4,7 +4,6 @@ class TeamMember {
         this.id = id;
         this.email = email;
     };
-
     //methods to go here
 }
 

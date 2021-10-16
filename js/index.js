@@ -1,3 +1,7 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//required packages
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 const TeamMember = require("./TeamMember");
 const TeamManager = require("./TeamManager");
 const Engineer = require("./Engineer");
@@ -5,33 +9,12 @@ const Intern = require("./Intern");
 const fs = require("fs");
 const inquirer = require("inquirer");
 
-function addNewEmployee() {
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//variables
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    var addNewEmployee = [{
-        type: 'list',
-        message: 'would you like to add a new employee?',
-        choices: ['yes', 'no'],
-        name: 'new'
-    }]
-    inquirer.prompt(addNewEmployee)
-        .then(response => {
-
-            if (response.new === 'yes') {
-                inquirer.prompt(primaryQuestions);
-            } else if (response.new === 'no') {
-                var employeesToAdd = allEmployees;
-                fs.writeFile('format.md', employeesToAdd);
-            }
-        })
-}
-
+var allEmployees = [];
 var primaryQuestions = [{
-        type: "list",
-        message: "would you like to add a new employee?",
-        choices: ['yes', 'no'],
-        name: "add"
-    },
-    {
         type: "input",
         message: "input employee name: ",
         name: "name",
@@ -52,72 +35,77 @@ var primaryQuestions = [{
         choices: ["Team Manager", "Engineer", "Intern"],
         name: "employee"
     }
-]
+];
+var addNewEmployee = {
+    type: 'list',
+    message: 'would you like to add a new employee?',
+    choices: ['yes', 'no'],
+    name: 'new'
+};
+var internQuesiton = {
+    type: "input",
+    message: "Where do they go to school?",
+    name: "school"
+};
+var engineerQuestion = {
+    type: "input",
+    message: "what is their gitHub link?",
+    name: "gitHub"
+};
+var managerQuestion = {
+    type: "input",
+    message: "what is their office number?",
+    name: "office"
+};
 
-var allEmployees = [];
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//inquirer 
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function askAboutEmployees() {
+    inquirer.prompt(primaryQuestions)
+        .then(function(primaryResp) {
 
-inquirer.prompt(primaryQuestions)
+            var newEmail = primaryResp.email;
+            var newName = primaryResp.name;
+            var newId = primaryResp.id;
 
-
-.then(response => {
-    if (response.add === 'no') {
-        console.log('nope!');
-        return;
-    }
-    var newEmail = response.email;
-    var newName = response.name;
-    var newId = response.id;
-    if (response.employee === "Team Manager") {
-        inquirer.prompt({
-            type: "input",
-            message: "what is their office number?",
-            name: "office"
-        })
-
-        .then(response => {
-            var newOffice = response.office;
-
-            function createNewTeamManager(name, id, email, officeNumber) {
-                const newTeamManager = new TeamManager(name, id, email, officeNumber);
-                return newTeamManager;
+            if (primaryResp.employee === "Team Manager") {
+                inquirer.prompt([managerQuestion, addNewEmployee]).then(response => {
+                    var manager = new TeamManager(newName, newId, newEmail, response.office);
+                    allEmployees.push(manager);
+                    if (response.new === 'yes') {
+                        askAboutEmployees();
+                    } else if (response.new === 'no') {
+                        // var employeesToAdd = allEmployees;
+                        // fs.writeFile('format.md', employeesToAdd);
+                    }
+                })
+            } else if (primaryResp.employee === "Engineer") {
+                inquirer.prompt([engineerQuestion, addNewEmployee]).then(response => {
+                    var engineer = new Engineer(newName, newId, newEmail, response.gitHub);
+                    allEmployees.push(engineer);
+                    if (response.new === 'yes') {
+                        askAboutEmployees();
+                    } else if (response.new === 'no') {
+                        // var employeesToAdd = allEmployees;
+                        // fs.writeFile('format.md', employeesToAdd);
+                    }
+                })
+            } else if (primaryResp.employee === "Intern") {
+                inquirer.prompt([internQuesiton, addNewEmployee]).then(response => {
+                    var intern = new Intern(newName, newId, newEmail, response.school);
+                    allEmployees.push(intern);
+                    if (response.new === 'yes') {
+                        askAboutEmployees();
+                    } else if (response.new === 'no') {
+                        // var employeesToAdd = allEmployees;
+                        // fs.writeFile('format.md', employeesToAdd);
+                    }
+                })
             }
-            let newTeamManager = createNewTeamManager(newName, newId, newEmail, newOffice);
-            console.log(newTeamManager);
+        }).catch(err => {
+            console.log("oops");
         })
-    } else if (response.employee === "Engineer") {
-        inquirer.prompt({
-                type: "input",
-                message: "what is their gitHub link?",
-                name: "gitHub"
-            })
-            .then(response => {
-                var newGitHub = response.gitHub;
 
-                function createNewEngineer(name, id, email, gitHub) {
-                    const newEngineer = new Engineer(name, id, email, gitHub);
-                    return newEngineer;
-                }
-                let newEngineeer = createNewEngineer(newName, newId, newEmail, newGitHub);
-                allEmployees.push(newEngineeer);
-                console.log(allEmployees);
-
-            })
-    } else if (response.employee === "Intern") {
-        inquirer.prompt({
-                type: "input",
-                message: "Where do they go to school?",
-                name: "school"
-            })
-            .then(response => {
-                var newSchool = response.school;
-
-                function createNewIntern(name, id, email, school) {
-                    const newIntern = new Intern(name, id, email, school);
-                    return newIntern;
-                }
-                let newIntern = createNewIntern(newName, newId, newEmail, newSchool);
-                console.log(newIntern);
-            })
-    }
-
-});
+}
+askAboutEmployees();
