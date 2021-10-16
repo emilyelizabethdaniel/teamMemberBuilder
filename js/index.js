@@ -5,6 +5,26 @@ const Intern = require("./Intern");
 const fs = require("fs");
 const inquirer = require("inquirer");
 
+function addNewEmployee() {
+
+    var addNewEmployee = [{
+        type: 'list',
+        message: 'would you like to add a new employee?',
+        choices: ['yes', 'no'],
+        name: 'new'
+    }]
+    inquirer.prompt(addNewEmployee)
+        .then(response => {
+
+            if (response.new === 'yes') {
+                inquirer.prompt(primaryQuestions);
+            } else if (response.new === 'no') {
+                var employeesToAdd = allEmployees;
+                fs.writeFile('format.md', employeesToAdd);
+            }
+        })
+}
+
 var primaryQuestions = [{
         type: "list",
         message: "would you like to add a new employee?",
@@ -40,6 +60,10 @@ inquirer.prompt(primaryQuestions)
 
 
 .then(response => {
+    if (response.add === 'no') {
+        console.log('nope!');
+        return;
+    }
     var newEmail = response.email;
     var newName = response.name;
     var newId = response.id;
@@ -57,7 +81,7 @@ inquirer.prompt(primaryQuestions)
                 const newTeamManager = new TeamManager(name, id, email, officeNumber);
                 return newTeamManager;
             }
-            var newTeamManager = createNewTeamManager(newName, newId, newEmail, newOffice);
+            let newTeamManager = createNewTeamManager(newName, newId, newEmail, newOffice);
             console.log(newTeamManager);
         })
     } else if (response.employee === "Engineer") {
@@ -74,7 +98,9 @@ inquirer.prompt(primaryQuestions)
                     return newEngineer;
                 }
                 let newEngineeer = createNewEngineer(newName, newId, newEmail, newGitHub);
-                console.log(newEngineeer);
+                allEmployees.push(newEngineeer);
+                console.log(allEmployees);
+
             })
     } else if (response.employee === "Intern") {
         inquirer.prompt({
@@ -94,32 +120,4 @@ inquirer.prompt(primaryQuestions)
             })
     }
 
-    // function createNewTeamMember(name, id, email) {
-    //     const newTeamMember = new TeamMember(name, id, email);
-    //     return newTeamMember;
-    // };
-    // var newTeamMember = createNewTeamMember(response.name, response.id, response.email);
-    // console.log(newTeamMember);
-    // allEmployees.push(newTeamMember);
-    // console.log(allEmployees);
 });
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-//     };
-//     let newTeamManager = createNewTeamManager(response.name, response.id, response.email, response.officeNumber)
-//     let newEngineer = createNewEngineer(response.name, response.id, response.email, response.gitHub)
-//     let newIntern = createNewIntern(response.name, response.id, response.email, response.school)
-
-
-// });
-
-
-
-//start question cycle over
-//if no more employees ->
-//push info to html page
