@@ -4,7 +4,16 @@ class TeamMember {
         this.id = id;
         this.email = email;
     };
-    //methods to go here
+
+    getRole() {
+        return "Team Member"
+    }
+    toString() {
+        return `${this.getRole()} Name : ${this.name}.
+            Team member: ${this.id}.
+            Team member email: ${this.email}.
+`
+    }
 }
 
 module.exports = TeamMember;

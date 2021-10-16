@@ -58,6 +58,8 @@ var managerQuestion = {
     name: "office"
 };
 
+
+
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //inquirer 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -76,8 +78,7 @@ function askAboutEmployees() {
                     if (response.new === 'yes') {
                         askAboutEmployees();
                     } else if (response.new === 'no') {
-                        // var employeesToAdd = allEmployees;
-                        // fs.writeFile('format.md', employeesToAdd);
+                        stringThemAll();
                     }
                 })
             } else if (primaryResp.employee === "Engineer") {
@@ -87,8 +88,7 @@ function askAboutEmployees() {
                     if (response.new === 'yes') {
                         askAboutEmployees();
                     } else if (response.new === 'no') {
-                        // var employeesToAdd = allEmployees;
-                        // fs.writeFile('format.md', employeesToAdd);
+                        stringThemAll();
                     }
                 })
             } else if (primaryResp.employee === "Intern") {
@@ -98,8 +98,7 @@ function askAboutEmployees() {
                     if (response.new === 'yes') {
                         askAboutEmployees();
                     } else if (response.new === 'no') {
-                        // var employeesToAdd = allEmployees;
-                        // fs.writeFile('format.md', employeesToAdd);
+                        stringThemAll();
                     }
                 })
             }
@@ -109,3 +108,16 @@ function askAboutEmployees() {
 
 }
 askAboutEmployees();
+
+function stringThemAll() {
+
+    let result = "";
+    allEmployees.forEach(employee => {
+        var employeeString = employee.toString();
+        result = result + employeeString;
+    })
+    fs.writeFile('format.html', result, (err) => {
+
+        console.log(err);
+    });
+};

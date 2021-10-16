@@ -6,6 +6,9 @@ class Intern extends TeamMember {
         super(name, id, email);
         this.school = school;
     }
+    toString() {
+        return `${super.toString()}Team member school: ${this.school}`
+    }
 };
 
 module.exports = Intern

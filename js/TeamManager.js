@@ -1,12 +1,17 @@
 const TeamMember = require("./TeamMember");
-const inquirer = require('inquirer');
+
 
 class TeamManager extends TeamMember {
     constructor(name, id, email, office) {
-            super(name, id, email);
-            this.officeNumber = office;
-        }
-        //methods go here
+        super(name, id, email);
+        this.officeNumber = office;
+    }
+    getRole() {
+        return "Team Manager"
+    }
+    toString() {
+        return `${super.toString()}Team member office number: ${this.officeNumber}`
+    }
 }
 
 module.exports = TeamManager;

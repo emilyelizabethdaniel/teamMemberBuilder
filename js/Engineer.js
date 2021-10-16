@@ -6,6 +6,9 @@ class Engineer extends TeamMember {
         super(name, id, email);
         this.gitHub = gitHub;
     }
+    toString() {
+        return `${super.toString()}Team member github: ${this.gitHub}`
+    }
 };
 
 module.exports = Engineer
