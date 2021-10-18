@@ -5,8 +5,8 @@ This app allows the user to dynamically add team members to their team through I
 
 
 ## Screenshot
-![daf](www.placeholder.com)
+![screenshot of webpage](Assets/screenshot.png)
 
 ## Links
 
-https://github.com/emilyelizabethdaniel?tab=followers
+https://github.com/emilyelizabethdaniel
