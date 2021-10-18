@@ -27,10 +27,10 @@ class Intern extends TeamMember {
         <div class="card-body">
           <h5 class="card-title">${this.getName()}</h5>
           <p class="card-text"> 
-          Job Title: ${this.getRole()}
-          Id: ${this.getId()}
-          This: ${this.getEmail()}
-          School: ${this.getSchool()}
+          Job Title: ${this.getRole()}<br>
+          Id: ${this.getId()}<br>
+          This: ${this.getEmail()}<br>
+          School: ${this.getSchool()}<br>
           </p>
 
         </div>
