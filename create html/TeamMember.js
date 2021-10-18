@@ -8,6 +8,16 @@ class TeamMember {
     getRole() {
         return "Team Member"
     }
+    getName() {
+        return this.name
+    }
+    getId() {
+        return this.id
+    }
+    getEmail() {
+        return this.email
+    }
+
     toString() {
         return `${this.getRole()} Name : ${this.name}.
             Team member: ${this.id}.

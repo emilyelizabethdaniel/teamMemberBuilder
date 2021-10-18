@@ -1,9 +1,24 @@
-const TeamManager = require('../js/TeamManager');
+const TeamManager = require('../create html/TeamManager');
 const myTeamManager = new TeamManager('emily', '4545', 'email.com', '888');
-describe('fizzBuzz', () => {
+
+describe('check to see if it returns the right role', () => {
     it('return the team member role', () => {
         expect(myTeamManager.getRole()).toBe('Team Manager');
     });
+    it('return the team member name', () => {
+        expect(myTeamManager.getName()).toBe('emily');
+    });
+    it('return the team member id', () => {
+        expect(myTeamManager.getId()).toBe('4545');
+    });
+    it('return the team member email', () => {
+        expect(myTeamManager.getEmail()).toBe('email.com');
+    });
+    it('return the team member office number', () => {
+        expect(myTeamManager.getOfficeNumber()).toBe('888');
+    });
+
+
 
     // it('should return Fizz if multiple of 3', () => {
     //     expect(TeamManager([3])).toBe('Fizz');
