@@ -131,7 +131,9 @@ function stringThemAll() {
   </head>
   
   <body>
-  
+  <header>
+  <h1>My Team</h1>
+</header>
 ${result}
         
   
